@@ -56,7 +56,7 @@ It will show an error cause you need API key
 
 Now recreate the Docker image with your api key:
 ```
-docker build --build-arg TMDB_V3_API_KEY=<your-api-key> -t netflix .
+docker build --build-arg TMDB_V3_API_KEY=4b471dc76ff88f17aa0863b5b601ad34 -t netflix .
 ```
 
 **Phase 2: Security**
@@ -181,7 +181,7 @@ pipeline {
         }
         stage('Checkout from Git') {
             steps {
-                git branch: 'main', url: 'https:https://github.com/Karthickps25/netflix.git'
+                git branch: 'main', url:'https://github.com/Karthickps25/netflix.git'
             }
         }
         stage("Sonarqube Analysis") {
@@ -192,13 +192,7 @@ pipeline {
                 }
             }
         }
-        stage("quality gate") {
-            steps {
-                script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token'
-                }
-            }
-        }
+        
         stage('Install Dependencies') {
             steps {
                 sh "npm install"
@@ -271,7 +265,7 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                git branch: 'main', url: 'https:https://github.com/Karthickps25/netflix.git'
+                git branch: 'main', url:'https://github.com/Karthickps25/netflix.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -282,13 +276,7 @@ pipeline{
                 }
             }
         }
-        stage("quality gate"){
-           steps {
-                script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token' 
-                }
-            } 
-        }
+        
         stage('Install Dependencies') {
             steps {
                 sh "npm install"
@@ -309,7 +297,7 @@ pipeline{
             steps{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
-                       sh "docker build --build-arg TMDB_V3_API_KEY=<yourapikey> -t netflix ."
+                       sh "docker build --build-arg TMDB_V3_API_KEY=4b471dc76ff88f17aa0863b5b601ad34 -t netflix ."
                        sh "docker tag netflix nasi101/netflix:latest "
                        sh "docker push nasi101/netflix:latest "
                     }
